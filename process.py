@@ -1,35 +1,36 @@
 import sys
-import math
 import random
 
-# Get data from the command line arguments
-number = int(sys.argv[1])
-text = sys.argv[2]
+if len(sys.argv) < 3:
+    print("Error: Se requieren un número y un texto.")
+    sys.exit(1)
 
-# Task 1: Number Puzzle
-if number % 2 == 0:
-    number_result = f"The number is even. Square root: {math.sqrt(number)}"
+user_number = int(sys.argv[1])
+user_text = sys.argv[2]
+
+if user_number % 2 == 0:
+    number_result = f"The number {user_number} is even. Its square root is {user_number ** 0.5:.2f}."
 else:
-    number_result = f"The number is odd. Cube: {number ** 3}"
+    number_result = f"The number {user_number} is odd. Its cube is {user_number ** 3}."
 
-# Task 2: Text Puzzle
-binary_text = ' '.join(format(ord(char), '08b') for char in text)
-vowel_count = sum(1 for char in text if char.lower() in 'aeiou')
+binary_text = " ".join(format(ord(c), "08b") for c in user_text)
+vowel_count = sum(1 for c in user_text.lower() if c in "aeiou")
 
-# Task 3: Treasure Hunt
-random_number = random.randint(1, 100)
+text_result = f"Binary: {binary_text}\nVowel Count: {vowel_count}"
+
+secret_number = random.randint(1, 100)
 attempts = 0
-treasure_hunt_result = "You didn't win the treasure."
+user_guess = random.randint(1, 100)
 
-while attempts < 5:
-    guess = random.randint(1, 100)  # Simulating guesses
+while user_guess != secret_number and attempts < 5:
+    user_guess = random.randint(1, 100)
     attempts += 1
-    if guess == random_number:
-        treasure_hunt_result = "Congratulations! You won the treasure!"
-        break
 
-# Display results
-print(f"<p>{number_result}</p>")
-print(f"<p>Binary-encoded text: {binary_text}</p>")
-print(f"<p>Number of vowels in text: {vowel_count}</p>")
-print(f"<p>{treasure_hunt_result}</p>")
+if user_guess == secret_number:
+    treasure_result = f"You found the treasure in {attempts} attempts!"
+else:
+    treasure_result = "You did not find the treasure."
+
+print(number_result)
+print(text_result)
+print(treasure_result)

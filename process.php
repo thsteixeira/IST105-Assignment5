@@ -1,25 +1,12 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $number = $_POST['number'];
-    $text = $_POST['text'];
+    $user_number = $_POST["user_number"];
+    $user_text = $_POST["user_text"];
 
-    // Prepare the command to execute the Python script with arguments
-    $command = escapeshellcmd("python process.py " . escapeshellarg($number) . " " . escapeshellarg($text));
-    
-    // Execute the command and capture the output
+    $command = escapeshellcmd("python process.py $user_number $user_text");
     $output = shell_exec($command);
-    
-    // Display the output
-    echo "<!DOCTYPE html>
-          <html>
-          <head>
-              <title>Results</title>
-          </head>
-          <body>
-              <h1>Results</h1>
-              <p>Outcome of the number puzzle:</p>
-              <p>$output</p>
-          </body>
-          </html>";
+
+    echo "<h2>Results:</h2>";
+    echo "<pre>$output</pre>";
 }
 ?>
